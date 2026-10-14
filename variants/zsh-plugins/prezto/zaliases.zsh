@@ -200,7 +200,6 @@ alias dc='docker-compose'
 alias k="kubectl"
 alias kb="kubectl"
 alias mk="minikube"
-# alias box='ssh -i $HOME/.ssh/id_rsa casey.burnett@10.235.47.51'
 alias bs='aws --no-verify-ssl'
 alias t=terraform
 
