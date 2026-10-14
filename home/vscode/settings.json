@@ -1,4 +1,6 @@
 {
+  "http.systemCertificates": true,
+  "http.proxySupport": "off",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#0deef4",
     "activityBar.background": "#0deef4",
