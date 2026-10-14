@@ -2,6 +2,6 @@
 caches/
 backups/
 .dotfiles-backup/
-local/
+/local/
 *.orig
 *.bak
