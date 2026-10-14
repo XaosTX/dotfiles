@@ -31,7 +31,7 @@ Still open:
   - Identifiers found by grep (personal and work): personal email in `onlykey.sh`, `identity.gitconfig` (email, signing key ID,), work account email in `ops.sh`, Jira user email and `gohighway.atlassian.net` in `jira.sh`, Highway AWS profile names in `aws.sh`, `*.centene.com` in `centene.zsh`, and `/Users/stephenroberts` in the iTerm2 plist. Codeangler attribution lines are expected.
   - Earlier checklist: the work account email in the `ops` alias, the signing key ID in `variants/git-identity/xaostx/identity.gitconfig`, employer hostnames and project names in the work profile.
   - Check the install scripts for tokens and keys. `install/deferred/common/60_ssh_keys.sh` handles a Dropbox token.
-  - Check `archive/` and `variants/` for leftover credentials.
+  - Check `variants/` for leftover credentials.
   - Confirm `.gitignore` covers generated files that could hold credentials (`~/.git-credentials` is outside the repo, but `local/` should stay ignored).
 
 ## Codeangler GitLab dotfiles (merged)

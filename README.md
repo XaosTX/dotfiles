@@ -212,7 +212,6 @@ Setting `HOME` as well as `--home` matters: git reads `HOME` directly, so the gi
 | `install/common/`, `install/darwin/`, `install/linux/` | Install steps by OS, run with `--install`. `install/optional/` and `install/deferred/` follow the same layout. |
 | `lib/common.sh` | Logging, OS detection and menu helpers. |
 | `test/` | Shell tests from the codeangler repo. |
-| `archive/` | Kept for reference, not linked. |
 | `licenses/`, `NOTICE.md` | Third-party licences and attribution. |
 
 ## Licence

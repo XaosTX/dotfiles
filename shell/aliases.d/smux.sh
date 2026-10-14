@@ -1,3 +1,4 @@
+# smux (experimental, from the codeangler tmux-testing). Defines functions only; not yet tested.
 #==========================================================
 # Testing below...not ready for prime time
 #==========================================================
