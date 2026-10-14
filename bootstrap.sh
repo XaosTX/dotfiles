@@ -212,6 +212,15 @@ df_link() {  # df_link SRC DEST: SRC absolute in the repo, DEST absolute under t
     DF_WARN=$((DF_WARN + 1))
     return 0
   fi
+  # never write through a symlinked folder: it would move or create files inside another tree (e.g. ~/.dotfiles)
+  local parent="$(dirname "$dest")"
+  while [ "$parent" != "$DF_TARGET" ] && [ "$parent" != "/" ] && [ -n "$parent" ]; do
+    if [ -L "$parent" ]; then
+      e_arrow "kept ~/$rel: ${parent#$DF_TARGET/} is a symlink to another folder (not written through)"
+      return 0
+    fi
+    parent="$(dirname "$parent")"
+  done
   if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$src" ]; then
     e_success "already linked ~/$rel"
     return 0
