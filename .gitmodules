@@ -1,0 +1,3 @@
+[submodule "vim"]
+	path = variants/vim/submodule
+	url = https://github.com/XaosTX/dotvim

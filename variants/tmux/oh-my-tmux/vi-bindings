@@ -1,0 +1,67 @@
+## ~/.dotfiles/tmux/vi-bindings
+## Make things act vim-like with easier keystrokes
+## Updated for compatibility with gpakosz/oh-my-tmux (January 2026)
+
+# Set Vi style keybindings
+set-window-option -g mode-keys vi
+
+# y and p as in vim
+bind-key Escape copy-mode
+unbind-key p
+bind-key p paste-buffer
+
+# extra commands for interacting with the ICCCM clipboard
+bind-key C-c run "tmux save-buffer - | (command -v pbcopy >/dev/null && pbcopy || xclip -i -sel clipboard)"
+bind-key C-v run "tmux set-buffer \"$( (command -v pbpaste >/dev/null && pbpaste) || xclip -o -sel clipboard)\"; tmux paste-buffer"
+
+# easy-to-remember split pane commands
+bind-key | split-window -h
+bind-key - split-window -v
+unbind-key '"'
+unbind-key %
+
+# resize panes with vim movement keys
+bind-key -r H resize-pane -L 5
+bind-key -r J resize-pane -D 5
+bind-key -r K resize-pane -U 5
+bind-key -r L resize-pane -R 5
+
+#----------------------------------------------------------------------------
+# Vi Window/Pane navigation mode using a custom key-table
+# This approach is compatible with gpakosz's binding transformations
+# Press C-w to enter vi-nav mode, then use vim-style keys
+#----------------------------------------------------------------------------
+bind-key C-w switch-client -T vi-nav
+
+#----------------------------------------------------------------------------
+# Smart pane switching with awareness of Vim splits.
+# See: https://github.com/christoomey/vim-tmux-navigator
+# See: https://www.bugsnag.com/blog/tmux-and-vim
+#----------------------------------------------------------------------------
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+       | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+is_fzf="ps -o state= -o comm= -t '#{pane_tty}' \
+  | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?fzf$'"
+
+bind -n C-h run "($is_vim && tmux send-keys C-h) || \
+                          tmux select-pane -L"
+
+bind -n C-j run "($is_vim && tmux send-keys C-j)  || \
+                         ($is_fzf && tmux send-keys C-j) || \
+                         tmux select-pane -D"
+
+bind -n C-k run "($is_vim && tmux send-keys C-k) || \
+                          ($is_fzf && tmux send-keys C-k)  || \
+                          tmux select-pane -U"
+
+bind -n C-l run  "($is_vim && tmux send-keys C-l) || \
+                          tmux select-pane -R"
+
+bind-key -n C-\\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
+bind-key -T copy-mode-vi C-h select-pane -L
+bind-key -T copy-mode-vi C-j select-pane -D
+bind-key -T copy-mode-vi C-k select-pane -U
+bind-key -T copy-mode-vi C-l select-pane -R
+bind-key -T copy-mode-vi C-\\ select-pane -l

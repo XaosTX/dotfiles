@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+function usage() {
+cat <<HELP
+
+usage: encrypt [source]
+
+Encrypt a file or directory using OpenSSL
+
+Copyright (c) 2014 Stephen Roberts
+Licensed under the MIT license.
+HELP
+}
+
+function _encrypt() {
+
+# Show usage if no params
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+tar cz "$@" | openssl enc -aes-256-cbc -out $1.enc
+
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_encrypt "$@"

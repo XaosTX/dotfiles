@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Simply logs the key and host so I know where my keys are
+
+$(brew --prefix ssh-copy-id)/bin/ssh-copy-id $@
+
+# Log
+KEY=
+while getopts 'i:' OPTION
+do
+  case $OPTION in 
+    i)
+      KEY=$OPTARG
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+DEST=$1
+
+[ $? -eq 0 ] && [ ! -z $KEY ] && echo "$(basename $KEY)	$DEST" >> ~/Dropbox/SSH\ Keys/ssh-copy-id.log

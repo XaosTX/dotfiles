@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+function usage() {
+cat <<HELP
+
+usage: decrypt [source]
+
+Decrypt a file or directory using OpenSSL
+
+Copyright (c) 2014 Stephen Roberts
+Licensed under the MIT license.
+HELP
+}
+
+function _decrypt() {
+
+# Show usage if no params
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+if [ -z "$2" ]; then
+  openssl enc -aes-256-cbc -d -in $1 | tar xz
+else
+  openssl enc -aes-256-cbc -d -in $1 -k "$2" | tar xz
+fi
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_decrypt "$@"

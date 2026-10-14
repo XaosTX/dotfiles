@@ -1,0 +1,13 @@
+!! st Appearance
+!St.font: xft:OpenDyslexic Nerd Font:style=Regular
+St.font: FiraCode Retina:style=Retina,Regular:size=10
+St.borderpx: 2
+St.shell: /usr/bin/zsh
+St.tabspaces: 8
+St.cwscale: 1.0
+St.chscale: 1.0
+St.minlatency: 8
+St.maxlatency: 33
+St.blinktimeout: 800
+St.bellvolume: 0
+St.termname: st-256color

@@ -1,0 +1,2 @@
+bin/nave -> ../vendor/nave/nave.sh (vendor/ not in repo; dangling)
+bin/subl -> macOS Sublime Text path (dangling outside macOS)

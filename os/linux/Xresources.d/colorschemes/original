@@ -1,0 +1,37 @@
+!! Colorscheme: original
+
+! special
+#define FOREGROUND #000000
+#define BACKGROUND #ffffff
+
+! black
+#define COLOR0 #000000
+#define COLOR8 #666666
+
+! red
+#define COLOR1 #d54e53
+#define COLOR9 #ff3334
+
+! green
+#define COLOR2 #b9ca4a
+#define COLOR10 #9ec400
+
+! yellow
+#define COLOR3 #e6c547
+#define COLOR11 #e7c547
+
+! blue
+#define COLOR4 #7aa6da
+#define COLOR12 #7aa6da
+
+! magenta
+#define COLOR5 #c397d8
+#define COLOR13 #b77ee0
+
+! cyan
+#define COLOR6 #70c0ba
+#define COLOR14 #54ced6
+
+! white
+#define COLOR7 #424242
+#define COLOR15 #2a2a2a

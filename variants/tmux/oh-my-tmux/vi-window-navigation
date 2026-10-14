@@ -1,0 +1,58 @@
+## ~/.dotfiles/tmux/vi-window-navigation
+## Try to emulate vi window navigation under tmux panes
+## Uses a custom key-table (vi-nav) for compatibility with gpakosz/oh-my-tmux
+##
+## Usage: Press <prefix> C-w to enter vi-nav mode, then use vim keys
+## Press Escape to exit vi-nav mode and return to normal
+
+# Bind ESC to exit vi-nav mode
+bind-key -T vi-nav Escape switch-client -T prefix
+
+# Arrow key navigation
+bind-key -T vi-nav Up     select-pane -U
+bind-key -T vi-nav Down   select-pane -D
+bind-key -T vi-nav Left   select-pane -L
+bind-key -T vi-nav Right  select-pane -R
+
+# Vim-style hjkl navigation
+bind-key -T vi-nav h      select-pane -L
+bind-key -T vi-nav j      select-pane -D
+bind-key -T vi-nav k      select-pane -U
+bind-key -T vi-nav l      select-pane -R
+
+# Swap panes (capital HJKL)
+bind-key -T vi-nav H      swap-pane -U
+bind-key -T vi-nav K      swap-pane -U
+bind-key -T vi-nav J      swap-pane -D
+bind-key -T vi-nav L      swap-pane -D
+
+# Resize panes
+bind-key -T vi-nav +      resize-pane -U
+bind-key -T vi-nav -      resize-pane -D
+bind-key -T vi-nav <      resize-pane -L
+bind-key -T vi-nav >      resize-pane -R
+
+# Other navigation
+bind-key -T vi-nav p      last-pane
+bind-key -T vi-nav =      next-layout
+
+# Split windows
+bind-key -T vi-nav s      split-window
+bind-key -T vi-nav v      split-window -h
+
+# Window navigation
+bind-key -T vi-nav w      next-window
+bind-key -T vi-nav W      previous-window
+bind-key -T vi-nav c      new-window
+bind-key -T vi-nav q      kill-pane
+bind-key -T vi-nav o      kill-pane -a    # close all but current (like :only)
+
+#----------------------------------------------------------------------------
+# Vim window navigation reference:
+#----------------------------------------------------------------------------
+# CTRL-W_t      CTRL-W t           go to top window
+# CTRL-W_w      CTRL-W w           go to N next window (wrap around)
+# CTRL-W_b      CTRL-W b           go to bottom window
+# CTRL-W_c      CTRL-W c           close current window (like :close)
+# CTRL-W_o      CTRL-W o           close all but current window (like :only)
+# CTRL-W_q      CTRL-W q           quit current window (like :quit)

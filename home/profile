@@ -1,0 +1,19 @@
+# ~/.profile: login shell entry point. Real configuration lives in DF_ROOT.
+if [ -f "$HOME/.config/dotfiles/env" ]; then . "$HOME/.config/dotfiles/env"; fi
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+if [ -f "$DF_ROOT/shell/common/environment.sh" ]; then . "$DF_ROOT/shell/common/environment.sh"; fi
+
+# if running bash include .bashrc if it exists
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+
+# if running zsh include .zshrc if it exists
+[ -n "$ZSH_VERSION" ] && [ -f "$HOME/.zshrc" ] && . "$HOME/.zshrc"

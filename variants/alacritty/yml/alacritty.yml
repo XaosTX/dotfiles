@@ -1,0 +1,88 @@
+env:
+  TERM: xterm-256color
+
+font:
+  normal:
+    family: FiraCode Nerd Font Mono
+    style: Retina,Regular
+  size: 7.5
+
+bell:
+  animation: EaseOutQuad
+  duration: 150
+  color: '0x565656'
+
+selection:
+  save_to_clipboard: false
+
+mouse:
+  url:
+    modifiers: Control
+
+#key_bindings:
+#  - { key: N, mods: Control, action: SpawnNewInstance }
+# Colors (Tomorrow Night Bright)
+colors:
+  # Default colors
+  primary:
+    background: '#000000'
+    foreground: '#eaeaea'
+
+  # Normal colors
+  normal:
+    black:   '#000000'
+    red:     '#d54e53'
+    green:   '#b9ca4a'
+    yellow:  '#e6c547'
+    blue:    '#7aa6da'
+    magenta: '#c397d8'
+    cyan:    '#70c0ba'
+    white:   '#424242'
+
+  # Bright colors
+  bright:
+    black:   '#666666'
+    red:     '#ff3334'
+    green:   '#9ec400'
+    yellow:  '#e7c547'
+    blue:    '#7aa6da'
+    magenta: '#b77ee0'
+    cyan:    '#54ced6'
+    white:   '#2a2a2a'
+
+    ## Colors (Nightfly)
+    #colors:
+    #  # Default colors
+    #  primary:
+    #    background: '#000000'
+    #    foreground: '#acb4c2'
+    #
+    #  cursor:
+    #    text: '#fafafa'
+    #    cursor: '#9ca1aa'
+    #
+    #  selection:
+    #    text: '#080808'
+    #    background: '#b2ceee'
+    #
+    #   # Normal colors
+    #  normal:
+    #    black:   '#1d3b53'
+    #    red:     '#fc514e'
+    #    green:   '#a1cd5e'
+    #    yellow:  '#e3d18a'
+    #    blue:    '#82aaff'
+    #    magenta: '#c792ea'
+    #    cyan:    '#7fdbca'
+    #    white:   '#a1aab8'
+    #
+    #   # Bright colors
+    #  bright:
+    #    black:   '#7c8f8f'
+    #    red:     '#ff5874'
+    #    green:   '#21c7a8'
+    #    yellow:  '#ecc48d'
+    #    blue:    '#82aaff'
+    #    magenta: '#ae81ff'
+    #    cyan:    '#7fdbca'
+    #    white:   '#d6deeb'

@@ -1,0 +1,20 @@
+!! Colorscheme: Old Xresources
+#define FOREGROUND #000000
+#define BACKGROUND #141c21
+
+#define COLOR0 #263640
+#define COLOR8 #4a697d
+#define COLOR1 #d12f2c
+#define COLOR9 #fa3935
+#define COLOR2 #819400
+#define COLOR10 #a4bd00
+#define COLOR3 #b08500
+#define COLOR11 #d9a400
+#define COLOR4 #2587cc
+#define COLOR12 #2ca2f5
+#define COLOR5 #696ebf
+#define COLOR13 #8086e8
+#define COLOR6 #289c93
+#define COLOR14 #33c5ba
+#define COLOR7 #bfbaac
+#define COLOR15 #fdf6e3

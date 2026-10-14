@@ -1,0 +1,3 @@
+#include ".dotfiles/Xresources.d/colors"
+#include ".dotfiles/Xresources.d/rxvt-unicode"
+#include ".dotfiles/Xresources.d/st"

@@ -1,0 +1,73 @@
+# --- Environment ---
+[env]
+TERM = "xterm-256color"
+
+# --- Window Settings ---
+[window]
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+opacity = 0.95
+blur = true                  # macOS only
+option_as_alt = "Both"       # Crucial for tmux/vim shortcuts on Mac
+
+# --- Font Settings ---
+[font]
+# Extracted from your old config
+normal = { family = "FiraCode Nerd Font Mono", style = "Retina" }
+bold = { family = "FiraCode Nerd Font Mono", style = "Bold" }
+size = 9.0                   # Bumped up slightly from 7.5 for modern high-res displays
+
+# --- Bell ---
+[bell]
+animation = "EaseOutQuad"
+duration = 150
+color = "#565656"
+
+# --- Colors (Your 'Tomorrow Night Bright' Theme) ---
+[colors.primary]
+background = "#000000"
+foreground = "#eaeaea"
+
+[colors.normal]
+black =   "#000000"
+red =     "#d54e53"
+green = "#b9ca4a"
+yellow =  "#e6c547"
+blue =    "#7aa6da"
+magenta = "#c397d8"
+cyan =    "#70c0ba"
+white =   "#424242"
+
+[colors.bright]
+black =   "#666666"
+red =     "#ff3334"
+green =   "#9ec400"
+yellow =  "#e7c547"
+blue =    "#7aa6da"
+magenta = "#b77ee0"
+cyan =    "#54ced6"
+white =   "#2a2a2a"
+
+# --- Mouse & Selection ---
+[selection]
+save_to_clipboard = true     # Enabled this for better workflow between apps
+
+[mouse]
+hide_when_typing = true
+
+# --- Shell Integration ---
+[terminal.shell]
+# This automatically boots you into your tmux session
+program = "/bin/sh"
+args = [
+    "-c",
+    "if [ -f /opt/homebrew/bin/tmux ]; then exec /opt/homebrew/bin/tmux new-session -A -s main; else exec tmux new-session -A -s main; fi"
+]
+
+# --- Keyboard Shortcuts ---
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u000c"             # Standard Mac 'Clear Screen'
+
+[terminal]

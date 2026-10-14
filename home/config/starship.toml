@@ -1,0 +1,39 @@
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+read_only = ""
+read_only_style = "red"
+truncation_symbol = ".../"
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+style = "yellow"
+symbol = "☁️ "
+[aws.region_aliases]
+ap-southeast-2 = 'au'
+us-east-1 = 'va'
+[aws.profile_aliases]
+CompanyGroupFrobozzOnCallAccess = 'Frobozz'
+
+[battery]
+full_symbol = " "
+charging_symbol = " "
+discharging_symbol = " "
+
+[[battery.display]]
+threshold = 10
+style = "bright-red"
+
+[[battery.display]]
+threshold = 30
+style = "bright-yellow"
+
+[[battery.display]]
+threshold = 50
+style = "green"
+
+[character]
+
+[time]
+disabled = false
+style = "blue"

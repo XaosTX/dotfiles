@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+function _sshkeygen() {
+
+  # Encrypt key and save in dropbox
+  KEY=$(/usr/bin/ssh-keygen $@ | awk 'NR==2' | sed -e 's/Your identification has been saved in //g' | rev | cut -c 2- | rev)
+  KEY=$(basename $KEY)
+
+  pushd ~/.ssh
+  encrypt $KEY $KEY.pub
+  mv $KEY.enc ~/Dropbox/dotfiles/ssh_keys
+  popd
+
+}
+
+_sshkeygen "$@"

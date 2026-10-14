@@ -1,0 +1,7 @@
+# generated at bootstrap or by tools; never commit
+caches/
+backups/
+.dotfiles-backup/
+local/
+*.orig
+*.bak

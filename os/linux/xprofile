@@ -1,0 +1,11 @@
+# ~/.xprofile: executed by the command interpreter for login shells.
+xrdb ~/.Xresources
+
+# Set Keyboard layout for Barrier
+setxkbmap -device `xinput list | grep "Virtual core XTEST keyboard" | sed -e 's/.*id=\([0-9]*\).*/\1/'` us dvorak
+
+# Swap Left Control and Caps Lock
+setxkbmap -option ctrl:nocaps
+
+# Map Escape to momentary Control_L
+xcape -e 'Control_L=Escape'

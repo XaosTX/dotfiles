@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+function usage() {
+cat <<HELP
+
+usage: backupdbs [-u username] [-p password] [-d data_dir] [-s seconds] destination
+
+Export databases that have changed in the past hours to sql. 
+
+Options:
+  -u    MySQL username
+  -p    MySQL password
+  -d    MySQL data directory (containing .frm files)
+  -s    Seconds to check timestamp (defaults to an hour)
+
+Copyright (c) 2014 Stephen Roberts
+Licensed under the MIT license.
+HELP
+}
+
+function _backupdbs() {
+
+# Show usage if no params
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+# Parse flags
+USER=
+PASS=
+DDIR=
+SEC=
+while getopts 'u:p:d:s:' OPTION
+do
+  case $OPTION in 
+    u)
+      USER=$OPTARG
+      ;;
+    p)
+      PASS=$OPTARG
+      ;;
+    d)
+      DDIR=$OPTARG
+      ;;
+    s)
+      SEC=$OPTARG
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+DEST=$1
+
+[ -z $DEST ] && echo "backupdbs: Missing destination" && usage && exit 1
+[ -z $USER ] && echo "backupdbs: Missing username" && exit 1
+[ -z $PASS ] && echo "backupdbs: Missing password" && exit 1
+[ -z $SEC ] && SEC="3600"
+[ -z $DDIR ] && DDIR=/usr/local/var/mysql
+
+dbs=$(/usr/local/bin/mysql --user=$USER --password="$PASS" -e "SHOW DATABASES;")
+dbs=${dbs/Database/}
+dbs=${dbs/information_schema/}
+dbs=${dbs/mysql/}
+dbs=${dbs/performance_schema/}
+for db in $dbs; do
+  # If data folder modified in the last SEC seconds
+  if [ $(stat -f "%m" $DDIR/ibdata1) -gt `expr $(date +%s) - $SEC` ]; then
+    /usr/local/bin/mysqldump --user=$USER --password="$PASS" $db | gzip -c > $DEST/$db.sql.gz
+    printf "Exported $db at $(date)\n" >> $DEST/backupdbs.log
+  fi
+done
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_backupdbs "$@"

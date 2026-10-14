@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+function usage() {
+cat <<HELP
+
+usage: dcfn [-n level] [-t type] [directory] [filename]
+
+Directory Contains File Named - List directories at level n containing filename
+
+Options:
+  -n    Max directory level to output
+  -t    File or directory, f or d
+
+Copyright (c) 2014 Stephen Roberts
+Licensed under the MIT license.
+HELP
+}
+
+function _dcfn() {
+
+# Show usage if no params
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+# Parse flags
+LEVEL=
+TYPE=
+while getopts 'hn:t:' OPTION
+do
+  case $OPTION in 
+    h)
+      usage
+      exit 1
+      ;;
+    n)
+      LEVEL="-maxdepth $OPTARG"
+      ;;
+    t)
+      TYPE="-type $OPTARG"
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+DIR=$1
+QUERY=$2
+
+if [ -z $DIR ] || [ -z $QUERY ]; then
+  echo "dcfn: Missing required parameters"
+  usage
+  exit 1
+fi
+
+# directories to LEVEL (compensating for spaces)
+while IFS= read -d $'\0' -r dir ; do
+  
+  # Get number of results matching QUERY
+  num=$(find "$dir" $TYPE -iname "$QUERY" | wc -l)
+
+  # If results, current directory contains a match
+  if [ $num -gt 0 ]; then
+    echo $dir
+  fi
+done < <(find "$DIR" $LEVEL -type d -print0)
+
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_dcfn "$@"

@@ -1,0 +1,28 @@
+# prompt: powerlevel9k (codeangler). Must be set before oh-my-zsh.sh loads the theme.
+
+#############
+# Powerline #
+#############
+
+POWERLEVEL9K_MODE='nerdfont-complete'
+
+# Prompt
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode)
+
+# Prompt "dir" truncation
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+# Hide vcs icon
+POWERLEVEL9K_VCS_GIT_ICON=''
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON=''
+POWERLEVEL9K_VCS_GIT_GITLAB_ICON=''
+POWERLEVEL9K_VCS_GIT_BITBUCKET_ICON=''
+
+# Truncate vcs branch
+POWERLEVEL9K_VCS_SHORTEN_LENGTH=6
+POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=11
+POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
