@@ -40,9 +40,12 @@ alias histg="history | grep"
 alias ducks='du -cks * | sort -rn | head'
 alias du="du -ach | sort -h"
 
-alias ps="ps auxf"
+# ps with no arguments shows the full process list; with arguments it runs as given
+# (a plain alias would add "auxf" to calls like `ps -U user -o pid,comm`, which conflict).
 if [[ $OSTYPE == "darwin"* ]]; then
-  alias ps="ps aux"
+  ps() { if [ $# -eq 0 ]; then command ps aux; else command ps "$@"; fi; }
+else
+  ps() { if [ $# -eq 0 ]; then command ps auxf; else command ps "$@"; fi; }
 fi
 alias psg="ps | grep -v grep | grep -i -e VSZ -e"
 alias free="free -mt"

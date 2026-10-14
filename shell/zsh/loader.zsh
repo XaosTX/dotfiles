@@ -5,7 +5,7 @@ export DOTFILES="$DF_ROOT"
 source "$DF_ROOT/shell/common/loader.sh"     # env, aliases, helpers, variants, profile aliases
 source "$DF_ROOT/shell/zsh/common.zsh"       # completions, history, src()/dotfiles()
 
-for f in "$DF_ROOT"/shell/os/"$DF_OS"/*.zsh(N); do source "$f"; done
+for f in "$DF_ROOT"/shell/os/"$DF_OS"/*.zsh(N) "$DF_ROOT"/local/shell/*.zsh(N); do source "$f"; done
 
 for pdir in "$DF_ROOT"/shell/profiles/*(N/); do
   p="${pdir:t}"

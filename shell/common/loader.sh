@@ -19,6 +19,9 @@ for v in ls-aliases editor gr-alias; do
 done
 
 # per-topic aliases (always on)
+# private per-machine shell files (local/shell/*.sh; not in the repo)
+for f in "$DF_ROOT"/local/shell/*.sh; do [ -f "$f" ] && . "$f"; done
+
 # OS-specific aliases: shell/os/$DF_OS/*.sh
 for f in "$DF_ROOT"/shell/os/"$DF_OS"/*.sh; do [ -f "$f" ] && . "$f"; done
 

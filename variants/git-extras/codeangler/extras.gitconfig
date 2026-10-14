@@ -1,56 +1,56 @@
-# Git extras: codeangler. Whitespace/CRLF handling, aliases, colours, url shortcuts.
-[core]
-  autocrlf = input
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-[apply]
-  whitespace = fix
+# Git extras: codeangler (shared settings). Identity, includeIf and credential helpers are per machine.
+# User info
 [alias]
-  br = branch
-  ci = commit
-  co = checkout
-  df = diff
-  g = grep -I
-  lg = log -p
-  pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
-  rb = rbranch
-  rv = review
-  st = status
-  ksdiff = difftool -y -t Kaleidoscope
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
+	# Log display with train tracks, commit, message, committer, and time
+	l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+	# Alternate log display with train tracks, commit, short message, initials, and time. From Scott Chacon
+	lol = log --pretty=oneline --abbrev-commit --graph --decorate
+	# Remove staged changes
+	unstage = reset HEAD
+	# See the changes ready to be committed
+	staged = diff --cached
+	# See changes since last commit
+	unstaged = diff
+	# See current branch
+	current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+	pwip = push -u -o merge_request.create -o merge_request.target=master -o merge_request.label=\"workflow::in-progress\"
+
+[core]
+  # Set global .gitignore file
+  filemode = false
+
+	#   editor = vim
+
+# Enable color highlights in git prompt
 [color]
-  ui = auto
-[color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
-[color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
-[color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
-[merge]
-  log = true
-[difftool "Kaleidoscope"]
-  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
-[rerere]
-  enabled = 1
-[url "git@github.com:"]
-  insteadOf = "gh:"
-  pushInsteadOf = "github:"
-  pushInsteadOf = "git://github.com/"
-[url "git://github.com/"]
-  insteadOf = "github:"
-[url "git@gist.github.com:"]
-  insteadOf = "gst:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com/"
-[url "git://gist.github.com/"]
-  insteadOf = "gist:"
-[url "git@heroku.com:"]
-  insteadOf = "heroku:"
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+	ui = true
+
+[fetch]
+    prune = true
+[init]
+    defaultBranch = master
+# Set the style of push to servers
+[push]
+	default = simple
+
+# Kaleidoscope integration
+# [difftool "Kaleidoscope"]
+# 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+# [diff]
+# 	tool = Kaleidoscope
+# [difftool]
+# 	prompt = false
+# [mergetool "Kaleidoscope"]
+# 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+# 	trustExitCode = true
+# [mergetool]
+# 	prompt = false
+# [merge]
+# 	tool = Kaleidoscope
+# # End Kaleidoscope integration
+[credential "https://github.com"]
+	useHttpPath = true

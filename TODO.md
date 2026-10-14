@@ -33,3 +33,11 @@ Still open:
   - Check the install scripts for tokens and keys. `install/deferred/common/60_ssh_keys.sh` handles a Dropbox token.
   - Check `archive/` and `variants/` for leftover credentials.
   - Confirm `.gitignore` covers generated files that could hold credentials (`~/.git-credentials` is outside the repo, but `local/` should stay ignored).
+
+## Codeangler GitLab dotfiles (merged)
+
+- [ ] Rotate the Hugging Face token that was in the public GitLab repo. It is now only in `local/shell/private.sh`.
+- [ ] Decide on the iTerm2 plist. The GitLab copy is 53 KB and newer than the one merged, and needs a review before it replaces ours.
+- [ ] The employer aliases in `local/shell/megacorp.zsh` still use `$HOME/Work` paths. Decide whether to move them to `~/ws`.
+- [ ] `.gitconfig-google` (the Google identity for `~/g/Google-RA`) is not in the GitLab repo. Needed if you want that identity.
+- [ ] Test prezto and the other dotfiles in the container test. The scratch-home test passed.

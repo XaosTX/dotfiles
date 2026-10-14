@@ -109,6 +109,23 @@ The Jira user and the password-manager path for `ops` are secrets. The `secrets`
 
 The shell reads secrets through `df_secret` (`shell/common/secrets.sh`), which uses the store the bootstrap recorded.
 
+## Per-machine files (local/)
+
+`local/` is gitignored. It holds personal and private values, and nothing in it goes to the repo:
+
+- `local/local.gitconfig`, `local/settings.env`: default git identity and work values (see above).
+- `local/git-work.gitconfig` (used under `~/ws`), `local/git-life.gitconfig` (used under `~/g`), `local/git-codeangler.gitconfig` (the codeangler identity option).
+- `local/ssh/config`, `local/pip/pip.conf`: linked into `~/.ssh/config` and `~/.config/pip/pip.conf`.
+- `local/shell/*.sh` and `local/shell/*.zsh`: private shell additions, loaded at startup. These include the employer aliases and the Hugging Face token. Rotate the token, since it was published in a public repo.
+
+A missing `local/` file is skipped quietly.
+
+## Prezto and npm
+
+- `zsh-plugins=prezto` with `prompt=prezto` uses prezto. Install it with `--optional` (`install/optional/common/50_prezto.sh`, pinned). zinit stays the default.
+- `~/.npmrc` is the supply-chain hardening file (a 7-day cooldown; the unit is days). Credentials belong in `~/.npmrc.local`, which is never tracked.
+- `home/vscode/settings.json` is linked to the macOS and Linux VS Code user settings.
+
 ## Profiles
 
 A profile adds shell aliases and functions for one context. Profiles are loaded from `shell/profiles/<name>/`, and only the ones listed in `--profiles` (or the saved list) are loaded.

@@ -114,6 +114,14 @@ df_check_deps() {
     e_error "prompt=powerlevel9k needs zsh-plugins=oh-my-zsh"
     return 2
   fi
+  if [ "$(df_group_val zsh-plugins)" = prezto ] && [ "$(df_group_val prompt)" != prezto ]; then
+    e_error "zsh-plugins=prezto needs prompt=prezto (prezto draws its own prompt)"
+    return 2
+  fi
+  if [ "$(df_group_val prompt)" = prezto ] && [ "$(df_group_val zsh-plugins)" != prezto ]; then
+    e_error "prompt=prezto needs zsh-plugins=prezto"
+    return 2
+  fi
 }
 
 df_interactive() {
@@ -199,6 +207,7 @@ df_link() {  # df_link SRC DEST: SRC absolute in the repo, DEST absolute under t
   local src="$1" dest="$2" rel bdir
   rel="${dest#$DF_TARGET/}"
   if [ ! -e "$src" ]; then
+    case "$src" in "$DF_ROOT"/local/*) return 0;; esac   # optional per-machine file
     e_error "missing ${src#$DF_ROOT/} (skipped ~/$rel)"
     DF_WARN=$((DF_WARN + 1))
     return 0

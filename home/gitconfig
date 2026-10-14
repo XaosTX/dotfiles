@@ -131,3 +131,10 @@
 
 [include]
   path = ~/.config/dotfiles/local.gitconfig
+
+# Directory rules come last so they win over the default identity (local.gitconfig above).
+# Work repos live under ~/ws, personal repos under ~/g (identities are per machine: local/)
+[includeIf "gitdir/i:~/ws/"]
+  path = ~/.config/dotfiles/git-work.gitconfig
+[includeIf "gitdir/i:~/g/"]
+  path = ~/.config/dotfiles/git-life.gitconfig

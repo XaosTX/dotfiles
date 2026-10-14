@@ -1,4 +1,3 @@
-# Git identity: codeangler (Stephen Roberts). Copied from the codeangler repo.
-[user]
-  name = Stephen Roberts
-  email = stephenroberts@gmail.com
+# Git identity: codeangler (GitLab dotfiles). The identity is in local/git-codeangler.gitconfig.
+[include]
+  path = ~/.config/dotfiles/git-codeangler.gitconfig

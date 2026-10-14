@@ -1,0 +1,64 @@
+# ------------------------------------------------------------------
+# npm supply-chain hardening   [TRACKED IN ~/dotfiles — NO SECRETS HERE]
+# Added 2026-08-09 after the keyv/cacheable "ChainDrop" worm campaign.
+# Requires npm >= 12  (check: npm -v).
+#
+# WARNING 1: `npm config set` rewrites this file and strips comments.
+# WARNING 2: this file is version-controlled. `npm login` writes
+#            //registry.npmjs.org/:_authToken=... into the user npmrc — if
+#            that ever lands here it is a committed credential. Put auth in
+#            ~/.npmrc.local (gitignored) or use an env var:
+#                //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+# ------------------------------------------------------------------
+
+# 7-day quarantine on newly published package versions.
+#
+# *** UNIT IS DAYS. Verified empirically on npm 12.0.2. NOT minutes. ***
+# min-release-age=7      -> seven days           (correct)
+# min-release-age=10080  -> 10080 days = 1998    -> every install dies
+#                           with "ENOVERSIONS: No versions available"
+#
+# Why this matters: malicious versions in this campaign were yanked within
+# hours. A 7-day delay means your resolver never sees them. npm silently
+# falls back to the newest version older than the threshold.
+min-release-age=7
+
+# Packages exempted from the cooldown. Keep EMPTY unless a build is truly
+# blocked - every entry is a hole in the quarantine.
+# Format: min-release-age-exclude=pkg-one,pkg-two
+min-release-age-exclude=
+
+# Audit on every install; fail on moderate severity and above.
+audit=true
+audit-level=moderate
+
+# Pin exact versions on install --save, so a caret range can't silently
+# pull a trojanised patch release later.
+save-exact=true
+
+# Always write and honour the lockfile.
+package-lock=true
+
+# Enforce the "engines" field in package.json. Paired with
+#   "engines": { "npm": ">=12" }
+# this makes an old npm REFUSE to install rather than silently ignoring
+# min-release-age (npm < 12 does not know the key and would skip the
+# cooldown without warning). This is the package.json-side limiter.
+engine-strict=true
+
+# Noise reduction.
+fund=false
+
+# ------------------------------------------------------------------
+# NOT enabled - read before turning on
+# ------------------------------------------------------------------
+# ignore-scripts=true blocks preinstall/install/postinstall hooks, which is
+# precisely how this worm executed. Strongest single control available.
+# Left OFF because it breaks native build steps (playwright, esbuild,
+# sharp, node-gyp modules).
+#
+# Preferred usage - per-install, for anything you don't fully trust:
+#     npm install --ignore-scripts <pkg>
+#
+# To enable globally anyway:
+#     npm config set ignore-scripts true --location=user
