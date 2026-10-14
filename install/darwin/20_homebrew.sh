@@ -1,5 +1,5 @@
 # Install Homebrew.
-if [[ ! "$(type -p brew)" ]]; then
+if ! command -v brew >/dev/null 2>&1; then
   e_header "Installing Homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   # load brew for this session (the installer only prints the PATH setup)
@@ -9,7 +9,7 @@ if [[ ! "$(type -p brew)" ]]; then
 fi
 
 # Exit if, for some reason, Homebrew is not installed.
-[[ ! "$(type -p brew)" ]] && e_error "Homebrew failed to install." && return 1
+! command -v brew >/dev/null 2>&1 && e_error "Homebrew failed to install." && return 1
 
 e_header "Updating Homebrew"
 brew doctor

@@ -1,5 +1,5 @@
 # Exit if Homebrew is not installed.
-[[ ! "$(type -p brew)" ]] && e_error "Brew recipes need Homebrew to install." && return 1
+! command -v brew >/dev/null 2>&1 && e_error "Brew recipes need Homebrew to install." && return 1
 
 # Homebrew recipes
 l0=(

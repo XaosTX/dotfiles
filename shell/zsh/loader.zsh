@@ -1,3 +1,6 @@
+# zsh: a glob with no matches expands to nothing (as in bash), so empty folders do not error
+setopt nullglob
+
 # Ordered zsh loader, sourced from ~/.zshrc after ~/.config/dotfiles/env.
 DF_ACTIVE="${DF_ACTIVE:-$HOME/.config/dotfiles/active}"
 export DOTFILES="$DF_ROOT"

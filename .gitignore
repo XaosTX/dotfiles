@@ -5,3 +5,6 @@ backups/
 /local/
 *.orig
 *.bak
+
+# private archives of local/ (never commit)
+*.tgz

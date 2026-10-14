@@ -2,7 +2,7 @@
 [ "$(get_install_type)" -lt "1" ] && return 1
 
 # Install rbenv
-if [[ "$(type -p rbenv)" ]]; then
+if command -v rbenv >/dev/null 2>&1; then
   recipes=( rbenv )
   brew_install_recipes
   eval "$(rbenv init -)"
