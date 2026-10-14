@@ -1,4 +1,4 @@
-# ~/.bashrc: entry point. Real configuration lives in DF_ROOT (see bootstrap.sh).
+# ~/.bashrc: entry point. Real configuration lives in DF_ROOT (see install.sh).
 if [ -f "$HOME/.config/dotfiles/env" ]; then . "$HOME/.config/dotfiles/env"; fi
 [ -n "$DF_ROOT" ] && . "$DF_ROOT/shell/bash/loader.bash"
 

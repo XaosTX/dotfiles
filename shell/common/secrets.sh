@@ -1,4 +1,4 @@
-# Work secrets, read at shell load. DF_SECRETS (set by bootstrap.sh) picks the store:
+# Work secrets, read at shell load. DF_SECRETS (set by install.sh) picks the store:
 #   local           -> DF_WORK_* values in ~/.config/dotfiles/settings.env (mode 600)
 #   macos-keychain  -> the login keychain, item "dotfiles.<key>" (macOS only)
 # df_secret KEY prints the value for KEY (jira-user, ops-pass-path), or nothing if it isn't set.

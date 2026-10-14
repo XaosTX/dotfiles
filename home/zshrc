@@ -1,4 +1,4 @@
-# ~/.zshrc: thin entry point. The real configuration lives in DF_ROOT (see bootstrap.sh).
+# ~/.zshrc: thin entry point. The real configuration lives in DF_ROOT (see install.sh).
 if [ -f "$HOME/.config/dotfiles/env" ]; then . "$HOME/.config/dotfiles/env"; fi
-if [ -z "$DF_ROOT" ]; then echo "dotfiles: not bootstrapped; run bootstrap.sh" >&2; return 1; fi
+if [ -z "$DF_ROOT" ]; then echo "dotfiles: not bootstrapped; run install.sh" >&2; return 1; fi
 source "$DF_ROOT/shell/zsh/loader.zsh"

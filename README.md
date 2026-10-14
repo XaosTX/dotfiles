@@ -1,6 +1,6 @@
 # dotfiles
 
-Shell, git, editor and terminal configuration, merged from two earlier repos. `bootstrap.sh` links it into your home directory and asks which of the conflicting options you want.
+Shell, git, editor and terminal configuration, merged from two earlier repos. `install.sh` links it into your home directory and asks which of the conflicting options you want.
 
 Licensed under the MIT License. See `LICENSE` and `NOTICE.md`.
 
@@ -9,27 +9,27 @@ Licensed under the MIT License. See `LICENSE` and `NOTICE.md`.
 ```sh
 git clone <this repo> ~/dotfiles        # any location works
 cd ~/dotfiles
-./bootstrap.sh --dry-run --yes          # see what would change; nothing is written
-./bootstrap.sh                          # interactive: asks each question
+./install.sh --dry-run --yes          # see what would change; nothing is written
+./install.sh                          # interactive: asks each question
 ```
 
 ## Commands
 
 | Command | What it does |
 |---|---|
-| `./bootstrap.sh` | Interactive. Asks for each choice, then the profiles, then git access. |
-| `./bootstrap.sh --yes` | Non-interactive. Uses `--choose`, environment variables, saved choices, then defaults. Skips git access. |
-| `./bootstrap.sh --dry-run` | Prints what would be linked, backed up, or activated. Writes nothing. |
-| `./bootstrap.sh --list-choices` | Prints each choice group, its options, its default, and what it means. |
-| `./bootstrap.sh --profiles work,personal` | Turns on profiles (default: `work`). |
-| `./bootstrap.sh --choose GROUP=OPTION` | Picks an option for a group. Repeat for several groups. |
-| `./bootstrap.sh --home DIR` | Targets another directory instead of `$HOME`. Use it to test. |
-| `./bootstrap.sh --help` | Prints the usage text. |
+| `./install.sh` | Interactive. Asks for each choice, then the profiles, then git access. |
+| `./install.sh --yes` | Non-interactive. Uses `--choose`, environment variables, saved choices, then defaults. Skips git access. |
+| `./install.sh --dry-run` | Prints what would be linked, backed up, or activated. Writes nothing. |
+| `./install.sh --list-choices` | Prints each choice group, its options, its default, and what it means. |
+| `./install.sh --profiles work,personal` | Turns on profiles (default: `work`). |
+| `./install.sh --choose GROUP=OPTION` | Picks an option for a group. Repeat for several groups. |
+| `./install.sh --home DIR` | Targets another directory instead of `$HOME`. Use it to test. |
+| `./install.sh --help` | Prints the usage text. |
 
 Example:
 
 ```sh
-./bootstrap.sh --yes --profiles work --choose prompt=powerlevel9k --choose zsh-plugins=oh-my-zsh
+./install.sh --yes --profiles work --choose prompt=powerlevel9k --choose zsh-plugins=oh-my-zsh
 ```
 
 ### Exit status
@@ -160,10 +160,10 @@ Packages, fonts, Homebrew and the other machine setup live in the separate `xaos
 
 ## Using it from a larger bootstrap
 
-Source `bootstrap.sh` and call `dotfiles_main` with the same flags:
+Source `install.sh` and call `dotfiles_main` with the same flags:
 
 ```sh
-source "$DOTFILES_DIR/bootstrap.sh"
+source "$DOTFILES_DIR/install.sh"
 dotfiles_main --yes --profiles work
 ```
 
@@ -175,7 +175,7 @@ Test against a scratch directory, never your home directory:
 
 ```sh
 mkdir -p /tmp/dotfiles-test
-HOME=/tmp/dotfiles-test ./bootstrap.sh --yes --home /tmp/dotfiles-test
+HOME=/tmp/dotfiles-test ./install.sh --yes --home /tmp/dotfiles-test
 ```
 
 Setting `HOME` as well as `--home` matters: git reads `HOME` directly, so the git config and credential store go to the test directory too.
@@ -186,7 +186,7 @@ Setting `HOME` as well as `--home` matters: git reads `HOME` directly, so the gi
 
 | Path | Contents |
 |---|---|
-| `bootstrap.sh` | Entry point: interactive questions, linking, git access. |
+| `install.sh` | Entry point: interactive questions, linking, git access. |
 | `manifest/choices.conf` | Choice groups, options, defaults. |
 | `manifest/links.conf` | Files linked into `$HOME`, with the OS each applies to. |
 | `home/` | Files linked into `$HOME`. The shell entry points are thin. |

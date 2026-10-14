@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared shell helpers, extracted from the codeangler dotfiles driver (MIT, see licenses/).
-# Sourced by bootstrap.sh and by shell/lib/00_dotfiles.sh. Defines no aliases.
+# Sourced by install.sh and by shell/lib/00_dotfiles.sh. Defines no aliases.
 
 ###########################################
 # GENERAL PURPOSE EXPORTED VARS / FUNCTIONS

@@ -5,7 +5,7 @@
 case ":$PATH:" in *":$DF_ROOT/bin:"*) ;; *) PATH="$DF_ROOT/bin:$PATH"; export PATH;; esac
 . "$DF_ROOT/shell/common/commonrc.sh"
 
-# per-machine identity and work values (written by bootstrap.sh; not in the repo), then secret lookup
+# per-machine identity and work values (written by install.sh; not in the repo), then secret lookup
 DF_STATE="${DF_STATE:-$HOME/.config/dotfiles}"
 [ -r "$DF_STATE/settings.env" ] && . "$DF_STATE/settings.env"
 . "$DF_ROOT/shell/common/secrets.sh"

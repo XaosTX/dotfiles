@@ -11,7 +11,7 @@ function src() {
 }
 # Run the bootstrap, then reload the shell helpers.
 function dotfiles() {
-  "$DF_ROOT/bootstrap.sh" "$@" && src
+  "$DF_ROOT/install.sh" "$@" && src
 }
 
 TERM=xterm-256color
