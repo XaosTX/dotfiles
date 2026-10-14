@@ -71,3 +71,11 @@ append_path "$HOME/.cargo/bin"
 
 # Setup for OnlyKey GnuPG
 #export GNUPGHOME=~/.gnupg/onlykey
+
+# asdf: shims (every version set with asdf) and, when asdf is not already on PATH, the git-clone
+# binary. Sets PATH only: asdf.sh is bash-only and breaks zsh, so it is never sourced here.
+export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
+if [ -d "$ASDF_DATA_DIR/shims" ]; then prepend_path "$ASDF_DATA_DIR/shims"; fi
+if ! command -v asdf >/dev/null 2>&1 && [ -x "$ASDF_DATA_DIR/bin/asdf" ]; then
+  prepend_path "$ASDF_DATA_DIR/bin"
+fi
