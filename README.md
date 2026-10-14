@@ -23,8 +23,6 @@ cd ~/dotfiles
 | `./bootstrap.sh --list-choices` | Prints each choice group, its options, its default, and what it means. |
 | `./bootstrap.sh --profiles work,personal` | Turns on profiles (default: `work`). |
 | `./bootstrap.sh --choose GROUP=OPTION` | Picks an option for a group. Repeat for several groups. |
-| `./bootstrap.sh --install` | Also runs the `install/` steps (packages, fonts, default tools). |
-| `./bootstrap.sh --optional` | Also runs `install/optional/` (oh-my-zsh, Chef, Eclipse). Implies `--install`. |
 | `./bootstrap.sh --home DIR` | Targets another directory instead of `$HOME`. Use it to test. |
 | `./bootstrap.sh --help` | Prints the usage text. |
 
@@ -122,7 +120,7 @@ A missing `local/` file is skipped quietly.
 
 ## Prezto and npm
 
-- `zsh-plugins=prezto` with `prompt=prezto` uses prezto. Install it with `--optional` (`install/optional/common/50_prezto.sh`, pinned). zinit stays the default.
+- `zsh-plugins=prezto` with `prompt=prezto` uses prezto. Install it with the bootstrap repo's optional steps (pinned). zinit stays the default.
 - `~/.npmrc` is the supply-chain hardening file (a 7-day cooldown; the unit is days). Credentials belong in `~/.npmrc.local`, which is never tracked.
 - `home/vscode/settings.json` is linked to the macOS and Linux VS Code user settings.
 
@@ -158,15 +156,7 @@ The bootstrap never deletes a regular file. It only moves files and removes link
 
 ## Install steps
 
-Install steps are grouped by OS, the same way as the shell aliases:
-
-- `install/common/` runs on every OS (fonts).
-- `install/darwin/` runs only on macOS (Xcode tools, Homebrew, casks and recipes, fzf, iTerm2, node, ruby, vim plugins, misc).
-- `install/linux/` runs only on Linux (apt packages and `dist-upgrade`, vim plugins).
-
-`install/` runs with `--install`. `install/optional/` runs with `--optional`, one prompt per step when interactive: `common/` (oh-my-zsh and the powerlevel9k theme; zinit is the default plugin framework), `linux/` (Chef DK, disabled until fixed; Eclipse with eclim, old pinned releases). `install/deferred/` is not run by any flag: the Dropbox key step, being reworked.
-
-The OS folder is chosen by `DF_OS`. Fonts are pinned to Nerd Fonts `v3.5.1`. oh-my-zsh and powerlevel9k are cloned at pinned commits. The powerlevel9k theme is archived upstream.
+Packages, fonts, Homebrew and the other machine setup live in the separate `xaostx/bootstrap` repo. It clones or updates this repo, runs this bootstrap with the same flags, then runs its install steps.
 
 ## Using it from a larger bootstrap
 
@@ -196,7 +186,7 @@ Setting `HOME` as well as `--home` matters: git reads `HOME` directly, so the gi
 
 | Path | Contents |
 |---|---|
-| `bootstrap.sh` | Entry point: interactive questions, linking, git access, install. |
+| `bootstrap.sh` | Entry point: interactive questions, linking, git access. |
 | `manifest/choices.conf` | Choice groups, options, defaults. |
 | `manifest/links.conf` | Files linked into `$HOME`, with the OS each applies to. |
 | `home/` | Files linked into `$HOME`. The shell entry points are thin. |
@@ -209,7 +199,6 @@ Setting `HOME` as well as `--home` matters: git reads `HOME` directly, so the gi
 | `variants/<group>/<option>/` | Options for each choice group. |
 | `os/darwin/`, `os/linux/` | OS-specific files, linked only on that OS. |
 | `bin/` | Utility scripts from the codeangler repo, added to `$PATH`. |
-| `install/common/`, `install/darwin/`, `install/linux/` | Install steps by OS, run with `--install`. `install/optional/` and `install/deferred/` follow the same layout. |
 | `lib/common.sh` | Logging, OS detection and menu helpers. |
 | `test/` | Shell tests from the codeangler repo. |
 | `licenses/`, `NOTICE.md` | Third-party licences and attribution. |

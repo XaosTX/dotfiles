@@ -6,9 +6,6 @@
 #   -y, --yes              Don't prompt. Uses --choose, env, saved choices, then defaults.
 #   --choose GROUP=OPTION  Pick an option for a choice group (repeatable).
 #   --profiles LIST        Comma-separated profiles, e.g. work or work,personal.
-#   --install              Also run install/ steps (package managers, fonts, tools).
-#   --optional             Also run install/optional/ (oh-my-zsh, Chef, Eclipse). Asks per step when
-#                          interactive; with --yes, runs them all. Implies --install.
 #   --dry-run              Show what would change; change nothing.
 #   --home DIR             Target home directory (default: $HOME). Used for testing.
 #   --list-choices         Print choice groups and their options, then exit.
@@ -502,36 +499,16 @@ df_vim_submodule() {
   fi
 }
 
-df_run_install() {  # df_run_install DIR [ask|all]: run DIR/common/*.sh, then DIR/<this OS>/*.sh; ask prompts per file
-  local f base osel mode="${2:-all}" ans
-  osel="$(df_os)"
-  for f in "$1"/common/*.sh "$1/$osel"/*.sh; do
-    [ -f "$f" ] || continue
-    base="${f#$1/}"
-    if [ "$mode" = ask ] && [ -z "$DF_DRY" ]; then
-      read -r -p "  Run optional step $base? [y/N]: " ans
-      case "$ans" in y|Y|yes|YES) ;; *) e_arrow "skipped $base"; continue;; esac
-    fi
-    if [ -n "$DF_DRY" ]; then e_arrow "would run $(basename "$1")/$base"; continue; fi
-    e_header "$(basename "$1")/$base"
-    if ! ( install_type=1; DOTFILES="$DF_ROOT"; source "$DF_ROOT/lib/common.sh"; source "$f" ); then
-      e_error "$base failed"
-      DF_WARN=$((DF_WARN + 1))
-    fi
-  done
-}
 
 dotfiles_main() {
   # bash-only syntax below: when sourced from zsh, hand the whole run to bash
   if [ -n "$ZSH_VERSION" ]; then bash "$DF_ROOT/bootstrap.sh" "$@"; return $?; fi
-  local yes= install= optional= list= i
+  local yes= list= i
   DF_DRY=; DF_WARN=0; DF_BACKUPS=; PROFILES_CLI=; CLI_CHOICES=()
   while [ $# -gt 0 ]; do
     case "$1" in
       -y|--yes) yes=1;;
       --dry-run) DF_DRY=1;;
-      --install) install=1;;
-      --optional) install=1; optional=1;;
       --list-choices) list=1;;
       --profiles) PROFILES_CLI="$2"; shift;;
       --choose) CLI_CHOICES+=("$2"); shift;;
@@ -565,10 +542,6 @@ dotfiles_main() {
   df_link_home
   df_activate
   df_vim_submodule
-  [ -n "$install" ] && df_run_install "$DF_ROOT/install"
-  if [ -n "$optional" ]; then
-    if [ -n "$DF_INTERACTIVE" ]; then df_run_install "$DF_ROOT/install/optional" ask; else df_run_install "$DF_ROOT/install/optional" all; fi
-  fi
 
   [ -n "$DF_BACKUPS" ] && e_arrow "previous files moved to $DF_TARGET/.dotfiles-backup/$DF_RUN_TS"
   if [ "$DF_WARN" -gt 0 ]; then
