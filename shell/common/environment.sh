@@ -1,8 +1,8 @@
 # ~/.environment: executed by the command interpreter for login shells.
 # common environment variables across shells
 # put shell specific values in e.g. ~/.zsh/environment
-export DEBUG=
-if [ -n "$DEBUG" ]; then echo "DEBUG: loading environment"; fi
+export DF_DEBUG="${DF_DEBUG:-}"
+if [ -n "$DF_DEBUG" ]; then echo "DEBUG: loading environment"; fi
 
 export EDITOR=vim
 export VISUAL=vim

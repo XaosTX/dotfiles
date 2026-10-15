@@ -5,7 +5,7 @@ if [ -f "$HOME/.config/dotfiles/env" ]; then . "$HOME/.config/dotfiles/env"; fi
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-if [ -n "$DEBUG" ]; then echo "DEBUG: loading ~/.bashrc"; fi
+if [ -n "$DF_DEBUG" ]; then echo "DEBUG: loading ~/.bashrc"; fi
 if [ -f $DF_ROOT/commonrc ]; then source $DF_ROOT/commonrc; fi
 
 if [ -f $DF_ROOT/bash/environment ]; then source $DF_ROOT/bash/environment; fi

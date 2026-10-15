@@ -1,6 +1,6 @@
 # Aliases for every shell. Shell-specific files live in shell/zsh and shell/bash;
 # choice-driven aliases (ls, editor, gr) live in variants/; work aliases in shell/profiles/work.
-if [ -n "$DEBUG" ]; then echo "DEBUG: loading aliases"; fi
+if [ -n "$DF_DEBUG" ]; then echo "DEBUG: loading aliases"; fi
 
 # colour support for grep
 if [ -x /usr/bin/dircolors ]; then

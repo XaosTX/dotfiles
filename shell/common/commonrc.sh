@@ -1,5 +1,5 @@
 # ~/.commonrc: common settings for non-login shells.
-if [ -n "$DEBUG" ]; then echo "DEBUG: loading ~/.commonrc"; fi
+if [ -n "$DF_DEBUG" ]; then echo "DEBUG: loading ~/.commonrc"; fi
 if [ -f "$DF_ROOT/shell/common/environment.sh" ]; then . "$DF_ROOT/shell/common/environment.sh"; fi
 if [ -f "$DF_ROOT/shell/common/aliases.sh" ]; then . "$DF_ROOT/shell/common/aliases.sh"; fi
 
