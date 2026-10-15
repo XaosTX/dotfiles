@@ -270,6 +270,15 @@ df_npmrc() {
   e_success "wrote ~/$rel (home/npmrc + local/npmrc)"
 }
 
+df_tool_dirs() {  # directories that tool configs refer to and do not create themselves
+  local d
+  for d in "$DF_TARGET/.terraform.d/plugin-cache"; do   # terraformrc: plugin_cache_dir (terraform needs it to exist)
+    [ -d "$d" ] && continue
+    if [ -n "$DF_DRY" ]; then e_arrow "would create ~/${d#$DF_TARGET/}"; continue; fi
+    mkdir -p "$d" && e_success "created ~/${d#$DF_TARGET/}"
+  done
+}
+
 df_link_home() {  # df_link_home [DEST]: every home link, or only the one whose destination is DEST
   local src dest os
   while IFS='|' read -r src dest os; do
@@ -576,6 +585,7 @@ dotfiles_main() {
   df_link_home ".gitconfig"
   df_activate_groups git-identity git-extras gitignore
   df_git_access
+  df_tool_dirs
   df_link_home
   df_activate
   df_vim_submodule
