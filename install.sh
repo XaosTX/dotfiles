@@ -237,6 +237,39 @@ df_link() {  # df_link SRC DEST: SRC absolute in the repo, DEST absolute under t
   if ln -s "$src" "$dest"; then e_success "linked ~/$rel"; else e_error "could not link ~/$rel"; DF_WARN=$((DF_WARN + 1)); fi
 }
 
+# df_npmrc DEST: ~/.npmrc is home/npmrc plus local/npmrc (per-machine, gitignored), written as a plain
+# file so private registry and CA lines never sit in the tracked file. With no local/npmrc it is the
+# plain link, as before. npm has no include, so the two are concatenated here.
+df_npmrc() {
+  local dest="$1" frag="$DF_ROOT/local/npmrc" tmp rel bdir
+  if [ ! -f "$frag" ]; then
+    df_link "$DF_ROOT/home/npmrc" "$dest"
+    return 0
+  fi
+  rel="${dest#$DF_TARGET/}"
+  if [ -n "$DF_DRY" ]; then
+    e_arrow "would write ~/$rel from home/npmrc + local/npmrc"
+    return 0
+  fi
+  tmp=$(mktemp) || return 1
+  { cat "$DF_ROOT/home/npmrc"; printf '\n# --- local/npmrc (per machine, not tracked) ---\n'; cat "$frag"; } > "$tmp"
+  if [ -f "$dest" ] && [ ! -L "$dest" ] && cmp -s "$tmp" "$dest"; then
+    rm -f "$tmp"
+    e_success "already up to date ~/$rel"
+    return 0
+  fi
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    bdir="$DF_TARGET/.dotfiles-backup/$DF_RUN_TS"
+    mkdir -p "$bdir/$(dirname "$rel")"
+    mv "$dest" "$bdir/$rel"
+    e_arrow "backed up ~/$rel"
+    DF_BACKUPS=1
+  fi
+  mkdir -p "$(dirname "$dest")"
+  mv "$tmp" "$dest" && chmod 600 "$dest"
+  e_success "wrote ~/$rel (home/npmrc + local/npmrc)"
+}
+
 df_link_home() {  # df_link_home [DEST]: every home link, or only the one whose destination is DEST
   local src dest os
   while IFS='|' read -r src dest os; do
@@ -244,7 +277,11 @@ df_link_home() {  # df_link_home [DEST]: every home link, or only the one whose 
     [ -z "$os" ] && os=any
     if [ -n "$1" ] && [ "$dest" != "$1" ]; then continue; fi
     if [ "$os" != any ] && [ "$os" != "$(df_os)" ]; then continue; fi
-    df_link "$DF_ROOT/$src" "$DF_TARGET/$dest"
+    if [ "$src" = home/npmrc ]; then
+      df_npmrc "$DF_TARGET/$dest"
+    else
+      df_link "$DF_ROOT/$src" "$DF_TARGET/$dest"
+    fi
   done < "$DF_ROOT/manifest/links.conf"
 }
 
