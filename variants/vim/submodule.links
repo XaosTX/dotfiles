@@ -1,1 +1,7 @@
 vimrc|.vimrc
+vimrc-common|.vim/vimrc-common
+colors|.vim/colors
+autoload|.vim/autoload
+ftplugin|.vim/ftplugin
+syntax|.vim/syntax
+pack|.vim/pack
