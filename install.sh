@@ -279,13 +279,33 @@ df_tool_dirs() {  # directories that tool configs refer to and do not create the
   done
 }
 
+# df_probe "app:Name.app,cmd:name,...": 0 when the list is empty, or when any listed app or command is installed
+df_probe() {
+  local list="$1" p
+  [ -z "$list" ] && return 0
+  local IFS=','
+  for p in $list; do
+    case "$p" in
+      app:*)
+        if [ -d "/Applications/${p#app:}" ] || [ -d "$HOME/Applications/${p#app:}" ]; then return 0; fi ;;
+      cmd:*)
+        if command -v "${p#cmd:}" >/dev/null 2>&1; then return 0; fi ;;
+    esac
+  done
+  return 1
+}
+
 df_link_home() {  # df_link_home [DEST]: every home link, or only the one whose destination is DEST
-  local src dest os
-  while IFS='|' read -r src dest os; do
+  local src dest os probe
+  while IFS='|' read -r src dest os probe; do
     case "$src" in ''|\#*) continue;; esac
     [ -z "$os" ] && os=any
     if [ -n "$1" ] && [ "$dest" != "$1" ]; then continue; fi
     if [ "$os" != any ] && [ "$os" != "$(df_os)" ]; then continue; fi
+    if ! df_probe "$probe"; then
+      e_arrow "not linked ~/$dest yet: $probe is not installed (the end-of-run pass links it)"
+      continue
+    fi
     if [ "$src" = home/npmrc ]; then
       df_npmrc "$DF_TARGET/$dest"
     else
